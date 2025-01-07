@@ -6,23 +6,22 @@ import { verticalScale as vs } from "utils";
  */
 export const fontSize = {
   /** Font size for Heading 1 */
-  h1: vs(30),
+  h1: vs(32),
   /** Font size for Heading 2 */
-  h2: vs(22),
+  h2: vs(24),
   /** Font size for Heading 3 */
-  h3: vs(18),
+  h3: vs(16),
   /** Font size for Heading 4 */
-  h4: vs(15),
+  h4: vs(12),
   /** Font size for Heading 5 */
   h5: vs(12),
-  /** Font size for Heading 6 */
-  h6: vs(10),
+
   /** Font size for Body text */
-  body: vs(14),
+  body: vs(16),
   /** Font size for Body text variant 1 */
-  body1: vs(12),
+  body1: vs(14),
   /** Font size for Body text variant 2 */
-  body2: vs(10),
+  body2: vs(12),
 };
 
 /**
@@ -46,8 +45,6 @@ export const lineHeight = {
   [fontSize.h4]: Math.round(fontSize.h4 * lineHeightFactor),
   /** Line height for Heading 5 */
   [fontSize.h5]: Math.round(fontSize.h5 * lineHeightFactor),
-  /** Line height for Heading 6 */
-  [fontSize.h6]: Math.round(fontSize.h6 * lineHeightFactor),
   /** Line height for Body text */
   [fontSize.body]: Math.round(fontSize.body * lineHeightFactor),
   /** Line height for Body text variant 1 */

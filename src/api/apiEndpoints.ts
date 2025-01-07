@@ -1,5 +1,5 @@
 export const endPoints = {
-  auth: {},
+  auth: { login: "auth/login" },
   product: {},
   cart: {},
 };

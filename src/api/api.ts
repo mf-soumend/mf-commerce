@@ -13,7 +13,7 @@ const DEFAULT_API_CONFIG: ApiConfig = {
  * Initialise axio api instance
  */
 export const api = axios.create({
-  baseURL: `${DEFAULT_API_CONFIG.url}/${DEFAULT_API_CONFIG.apiVersion}/`,
+  baseURL: `${DEFAULT_API_CONFIG.url}/`,
   timeout: DEFAULT_API_CONFIG.timeout,
   headers: {
     Accept: "application/json",
