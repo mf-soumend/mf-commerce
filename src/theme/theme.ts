@@ -14,8 +14,8 @@ export type Colors = typeof lightThemeColors;
  */
 const theme: ThemeWithMode = {
   light: {
-    primary: colors.primaryText,
-    text: colors.primaryText,
+    primary: colors.primary,
+    text: colors.black,
     background: colors.white,
     backgroundSecondary: colors.cultured,
     tertiary: colors.yankeesBlue,
@@ -26,10 +26,10 @@ const theme: ThemeWithMode = {
     card: colors.white,
   },
   dark: {
-    primary: colors.white,
+    primary: colors.primary,
     text: colors.white,
     background: colors.darkBg,
-    backgroundSecondary: colors.cultured,
+    backgroundSecondary: colors.culturedDark,
     tertiary: colors.lightGray,
     btnTextPrimary: colors.lavendarGray,
     btnTextSecondary: colors.silverFoil,

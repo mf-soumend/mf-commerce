@@ -6,17 +6,18 @@
     "paths": {
       "src/*": ["src/*"],
       "assets/*": ["src/assets/*"],
-      "theme": ["./src/theme"],
-      "theme/*": ["./src/theme/*"],
-      "screens": ["./src/screens"],
-      "components/*": ["./src/components/*"],
-      "navigation":["./src/navigation"],
-      "utils":["./src/utils"],
-      "store":["./src/store"],
-      "store/*":["./src/store/*"],
-      "slices/*" : ["./src/store/slices/*"],
-      "api": ["./src/api"],
-      "service" : ["./src/service"]
+      "theme": ["src/theme"],
+      "theme/*": ["src/theme/*"],
+      "screens": ["src/screens"],
+      "components/*": ["src/components/*"],
+      "navigation":["src/navigation"],
+      "utils":["src/utils"],
+      "store":["src/store"],
+      "store/*":["src/store/*"],
+      "slices/*" : ["src/store/slices/*"],
+      "api": ["src/api"],
+      "service" : ["src/service"],
+      "validation" : ["src/validationSchema"]
     }
   }
 }

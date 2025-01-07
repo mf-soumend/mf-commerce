@@ -3,6 +3,7 @@
  * Color names are taken from https://www.color-name.com/hex
  */
 export const colors = {
+  primary: "#8E6CEF",
   primaryText: "#272727",
   transparent: "rgba(0, 0, 0, 0)",
   electicRed: "#F00001",
@@ -29,7 +30,8 @@ export const colors = {
   silverFoil: "#AFAFAF",
   violet: "#8034DE",
   charlestonGreen: "#282828",
-  cultured: "#F5F5F5",
+  cultured: "#F4F4F4",
+  culturedDark: "#342F3F",
   success: "#66bb6a",
   danger: "#f44336",
   warning: "#ffa726",
