@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Clot",
+    "slug": "mf-commerce",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./src/assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#8e6cef"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#8e6cef"
+      },
+      "package": "com.mfsisoumend.mfcommerce"
+    },
+    "web": {
+      "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "200179b6-a864-4de6-9d79-d40583acb045"
+      }
+    }
+  }
+}
