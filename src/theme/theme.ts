@@ -24,6 +24,8 @@ const theme: ThemeWithMode = {
     border: colors.platinum,
     placeholderText: colors.gray,
     card: colors.white,
+    tabBarPrimary: colors.tabPrimary,
+    tabBarSecondary: colors.tabSecondary,
   },
   dark: {
     primary: colors.primary,
@@ -36,6 +38,8 @@ const theme: ThemeWithMode = {
     border: colors.darkCharcole,
     placeholderText: colors.gray,
     card: colors.yankeesBlue,
+    tabBarPrimary: colors.tabDarkPrimary,
+    tabBarSecondary: colors.tabDarkSecondary,
   },
 };
 

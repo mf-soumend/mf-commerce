@@ -5,12 +5,14 @@ import {
 } from "@react-navigation/native-stack";
 import { NavigationProps } from "./appNavigator";
 import Login from "src/screens/login";
-import Home from "src/screens/home";
 import { selectIsAuthenticated, useAppSelector } from "src/store";
+import { TabNavigator } from "./tabNavigator";
+import Cart from "src/screens/cart";
 
 export type PrimaryParamList = {
   login: undefined;
-  home: undefined;
+  shopHome: undefined;
+  cart: undefined;
 };
 export type PrimaryScreenProps<T extends keyof PrimaryParamList> =
   NativeStackScreenProps<PrimaryParamList, T>;
@@ -20,11 +22,14 @@ export const PrimaryNavigator = (props: NavigationProps) => {
 
   return (
     <PrimaryStack.Navigator
-      initialRouteName={isUserAuthenticated ? "home" : "login"}
+      initialRouteName={isUserAuthenticated ? "shopHome" : "login"}
       screenOptions={{ headerShown: false }}
     >
       {isUserAuthenticated ? (
-        <PrimaryStack.Screen name="home" component={Home} />
+        <>
+          <PrimaryStack.Screen name="shopHome" component={TabNavigator} />
+          <PrimaryStack.Screen name="cart" component={Cart} />
+        </>
       ) : (
         <PrimaryStack.Screen name="login" component={Login} />
       )}

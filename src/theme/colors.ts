@@ -40,4 +40,8 @@ export const colors = {
   freeBlue: "#02655c",
   boxShadow: "#e3e3e3",
   blue: "#3367d6",
+  tabPrimary: "#8E6CEF",
+  tabSecondary: "#27272780",
+  tabDarkPrimary: "#8E6CEF",
+  tabDarkSecondary: "#FFFFFF80",
 };
