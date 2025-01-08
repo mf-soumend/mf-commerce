@@ -93,11 +93,15 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
                   }}
                 >
                   {user?.image ? (
-                    <Image src={user.image} style={styles.profilePicture} />
+                    // TODO: replace "source={require("assets/categorytemp.png")}" with "src={user.image}"
+                    <Image
+                      source={require("assets/user.png")}
+                      style={styles.profilePicture}
+                    />
                   ) : (
                     <Octicons
                       name="person"
-                      size={vs(spacing.xl)}
+                      size={vs(spacing.lg)}
                       color={colors.black}
                     />
                   )}
@@ -119,9 +123,7 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
                 </TouchableOpacity>
               );
             },
-            headerStyle: {
-              height: vs(100),
-            },
+            headerStyle: styles.headerStyle,
           })}
         />
         <Tab.Screen
@@ -165,6 +167,10 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
  */
 const makeStyles = (colors: Colors) =>
   StyleSheet.create({
+    headerStyle: {
+      height: vs(100),
+      backgroundColor: colors.background,
+    },
     container: {
       backgroundColor: colors.background,
       borderTopWidth: 0,
@@ -181,7 +187,7 @@ const makeStyles = (colors: Colors) =>
       width: vs(40),
       marginHorizontal: vs(spacing.lg),
       marginTop: vs(spacing.sm),
-      backgroundColor: colors.backgroundSecondary,
+      backgroundColor: colors.grayX11,
       borderRadius: "100%",
       overflow: "hidden",
       flexDirection: "row",

@@ -3,7 +3,6 @@ import {
   Image,
   StyleSheet,
   Text,
-  Touchable,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -127,7 +126,7 @@ const makeStyle = (colors: Colors) =>
       backgroundColor: colors.transparent,
     },
     category: {
-      gap: vs(spacing.md),
+      gap: vs(spacing.sm),
       alignItems: "center",
     },
     categoryImageWrapper: {
