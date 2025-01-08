@@ -23,7 +23,9 @@ export const PrimaryNavigator = (props: NavigationProps) => {
   return (
     <PrimaryStack.Navigator
       initialRouteName={isUserAuthenticated ? "shopHome" : "login"}
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       {isUserAuthenticated ? (
         <>

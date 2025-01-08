@@ -44,4 +44,5 @@ export const colors = {
   tabSecondary: "#27272780",
   tabDarkPrimary: "#8E6CEF",
   tabDarkSecondary: "#FFFFFF80",
+  textSecondaryDark: "#272727",
 };

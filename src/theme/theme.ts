@@ -16,6 +16,7 @@ const theme: ThemeWithMode = {
   light: {
     primary: colors.primary,
     text: colors.black,
+    textSecondary: colors.textSecondaryDark,
     background: colors.white,
     backgroundSecondary: colors.cultured,
     tertiary: colors.yankeesBlue,
@@ -30,6 +31,7 @@ const theme: ThemeWithMode = {
   dark: {
     primary: colors.primary,
     text: colors.white,
+    textSecondary: colors.white,
     background: colors.darkBg,
     backgroundSecondary: colors.culturedDark,
     tertiary: colors.lightGray,

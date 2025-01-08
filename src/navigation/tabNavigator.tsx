@@ -48,12 +48,14 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
     tabBarInactiveTintColor: colors.tabBarSecondary,
     tabBarHideOnKeyboard: true,
     tabBarItemStyle: styles.tabBtn,
+    headerStyle: {
+      backgroundColor: colors.freeBlue,
+    },
   };
 
   /**
    * Generate screen options for tab navigator
    *
-   * @param title - string: Title of the screen.
    * @param icon - JSX.Element | IconTypes: Icon element or icon type.
    */
   const generateScreenOptions = ({
@@ -166,7 +168,6 @@ const makeStyles = (colors: Colors) =>
     container: {
       backgroundColor: colors.background,
       borderTopWidth: 0,
-      paddingHorizontal: vs(spacing.lg),
       height: vs(80),
     },
     tabShadow: {

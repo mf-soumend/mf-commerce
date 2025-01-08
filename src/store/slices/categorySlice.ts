@@ -9,12 +9,14 @@ export interface Category {
 }
 interface CategoryState {
   categories: Category[];
+  selectedCategory: string;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: CategoryState = {
   categories: [],
+  selectedCategory: "",
   loading: false,
   error: null,
 };
@@ -39,7 +41,11 @@ export const fetchCategoriesThunk = createAsyncThunk<FetchCategoryPayload>(
 const categorySlice = createSlice({
   name: "categories",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategoriesThunk.pending, (state) => {
@@ -48,8 +54,9 @@ const categorySlice = createSlice({
       })
       .addCase(fetchCategoriesThunk.fulfilled, (state, action) => {
         const { data } = action.payload;
-        state.categories = data;
+        state.categories = [{ name: "All", slug: "all", url: "" }, ...data];
         state.loading = false;
+        state.selectedCategory = "all";
       })
       .addCase(fetchCategoriesThunk.rejected, (state, action) => {
         state.loading = false;
@@ -58,7 +65,10 @@ const categorySlice = createSlice({
   },
 });
 
+export const { setSelectedCategory } = categorySlice.actions;
 export const selectCategories = (state: any) => state.categories.categories;
+export const selectSelectedCategory = (state: any) =>
+  state.categories.selectedCategory;
 export const selectCategoryLoading = (state: any) => state.categories.loading;
 export const selectCategoryError = (state: any) => state.categories.error;
 

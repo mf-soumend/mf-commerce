@@ -45,6 +45,7 @@ interface ThemeColors {
 
   tabBarPrimary: string;
   tabBarSecondary: string;
+  textSecondary: string;
 }
 
 export interface ThemeWithMode {

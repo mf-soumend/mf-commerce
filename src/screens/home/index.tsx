@@ -33,7 +33,4 @@ const makeStyle = (colors: Colors) =>
     container: {
       flex: 1,
     },
-    scrollViewStyle: {
-      paddingHorizontal: vs(spacing.lg),
-    },
   });
