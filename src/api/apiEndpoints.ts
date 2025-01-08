@@ -1,5 +1,7 @@
 export const endPoints = {
   auth: { login: "auth/login" },
-  product: {},
+  product: {
+    category: "products/categories",
+  },
   cart: {},
 };

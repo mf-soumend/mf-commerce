@@ -1,32 +1,39 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import React, { FC, useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { logoutUser, useAppDispatch } from "src/store";
+import { TabScreenProps } from "src/navigation";
+import { useAppDispatch } from "src/store";
+import { fetchCategoriesThunk } from "src/store/slices/categorySlice";
+import { Colors, spacing } from "src/theme";
+import { verticalScale as vs } from "src/utils";
+import VerticalCategories from "src/components/verticalCategories";
 
-const Home = () => {
+const Home: FC<TabScreenProps<"home">> = () => {
+  const { colors } = useTheme();
   const dispatch = useAppDispatch();
+  const styles = makeStyle(colors);
+  const fetchCategoryList = () => {
+    dispatch(fetchCategoriesThunk());
+  };
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TouchableOpacity
-        onPress={() => {
-          dispatch(logoutUser());
-        }}
-      >
-        <Text
-          style={{
-            color: "#000",
-            borderColor: "#000",
-            padding: 10,
-            backgroundColor: "#fff",
-          }}
-        >
-          Logout
-        </Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <VerticalCategories />
     </SafeAreaView>
   );
 };
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const makeStyle = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    scrollViewStyle: {
+      paddingHorizontal: vs(spacing.lg),
+    },
+  });

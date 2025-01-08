@@ -28,7 +28,8 @@
     "extra": {
       "eas": {
         "projectId": "200179b6-a864-4de6-9d79-d40583acb045"
-      }
+      },
+      "plugins": ["react-native-reanimated/plugin"]
     }
   }
 }

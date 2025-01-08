@@ -16,7 +16,6 @@ import Profile from "src/screens/profile";
 import Notifications from "src/screens/notifications";
 import Orders from "src/screens/orders";
 import { selectUser, useAppSelector } from "src/store";
-import Feather from "@expo/vector-icons/Feather";
 
 export type TabParamsList = {
   home: undefined;
@@ -39,7 +38,6 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const user = useAppSelector(selectUser).user;
-  console.log(user);
   /**
    * Screen options for tab navigator
    */
@@ -85,7 +83,6 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
             headerTitle: "",
             headerShadowVisible: false,
             headerLeft: () => {
-              console.log(user.image);
               return (
                 <TouchableOpacity
                   style={styles.userbtn}
@@ -113,10 +110,9 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
                     mainNav.navigate("cart");
                   }}
                 >
-                  <Feather
-                    name="shopping-cart"
-                    size={vs(20)}
-                    color={colors.white}
+                  <Image
+                    source={require("assets/cart.png")}
+                    style={{ height: vs(spacing.md), width: vs(spacing.md) }}
                   />
                 </TouchableOpacity>
               );
@@ -193,7 +189,7 @@ const makeStyles = (colors: Colors) =>
       position: "relative",
     },
     profilePicture: {
-      height: 40,
-      width: 40,
+      height: vs(40),
+      width: vs(40),
     },
   });

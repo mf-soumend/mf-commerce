@@ -2,16 +2,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
 import persistReducer from "redux-persist/es/persistReducer";
-import userReducer from "slices/userSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import userReducer from "slices/userSlice";
+import categorySlice from "slices/categorySlice";
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blackList: [],
+  blackList: ["categories"],
 };
 const rootReducer = combineReducers({
   user: userReducer,
+  categories: categorySlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
