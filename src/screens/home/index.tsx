@@ -1,18 +1,15 @@
 import { useTheme } from "@react-navigation/native";
 import React, { FC, useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View } from "react-native";
 import { TabScreenProps } from "src/navigation";
 import { useAppDispatch } from "src/store";
 import { fetchCategoriesThunk } from "src/store/slices/categorySlice";
-import { Colors } from "src/theme";
 import VerticalCategories from "src/components/verticalCategories";
 import ProductListings from "src/components/productListings";
 
 const Home: FC<TabScreenProps<"home">> = () => {
-  const { colors } = useTheme();
   const dispatch = useAppDispatch();
-  const styles = makeStyle(colors);
+  const styles = makeStyle();
   const fetchCategoryList = () => {
     dispatch(fetchCategoriesThunk());
   };
@@ -20,16 +17,16 @@ const Home: FC<TabScreenProps<"home">> = () => {
     fetchCategoryList();
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <VerticalCategories />
       <ProductListings />
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default Home;
 
-const makeStyle = (colors: Colors) =>
+const makeStyle = () =>
   StyleSheet.create({
     container: {
       flex: 1,

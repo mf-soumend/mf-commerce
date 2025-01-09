@@ -7,7 +7,6 @@ import {
 } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@react-navigation/native";
 import { Colors, spacing } from "src/theme";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { verticalScale as vs } from "src/utils";
 import { PrimaryScreenProps } from "./primaryNavigator";
 import Octicons from "@expo/vector-icons/Octicons";
@@ -16,6 +15,7 @@ import Profile from "src/screens/profile";
 import Notifications from "src/screens/notifications";
 import Orders from "src/screens/orders";
 import { selectUser, useAppSelector } from "src/store";
+import makeCommanStyles from "styles";
 
 export type TabParamsList = {
   home: undefined;
@@ -38,6 +38,7 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const user = useAppSelector(selectUser).user;
+  const commonStyles = makeCommanStyles(colors);
   /**
    * Screen options for tab navigator
    */
@@ -48,9 +49,6 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
     tabBarInactiveTintColor: colors.tabBarSecondary,
     tabBarHideOnKeyboard: true,
     tabBarItemStyle: styles.tabBtn,
-    headerStyle: {
-      backgroundColor: colors.freeBlue,
-    },
   };
 
   /**
@@ -69,95 +67,100 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
     ),
   });
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Tab.Navigator
-        detachInactiveScreens
-        initialRouteName="home"
-        screenOptions={screenOptions}
-      >
-        <Tab.Screen
-          name="home"
-          component={Home}
-          options={({ navigation: tabNav }) => ({
-            ...generateScreenOptions({
-              icon: "home",
-            }),
-            headerTitle: "",
-            headerShadowVisible: false,
-            headerLeft: () => {
-              return (
-                <TouchableOpacity
-                  style={styles.userbtn}
-                  onPress={() => {
-                    tabNav.navigate("profile");
-                  }}
-                >
-                  {user?.image ? (
-                    // TODO: replace "source={require("assets/categorytemp.png")}" with "src={user.image}"
-                    <Image
-                      source={require("assets/user.png")}
-                      style={styles.profilePicture}
-                    />
-                  ) : (
-                    <Octicons
-                      name="person"
-                      size={vs(spacing.lg)}
-                      color={colors.black}
-                    />
-                  )}
-                </TouchableOpacity>
-              );
-            },
-            headerRight: () => {
-              return (
-                <TouchableOpacity
-                  style={[styles.userbtn, { backgroundColor: colors.primary }]}
-                  onPress={() => {
-                    mainNav.navigate("cart");
-                  }}
-                >
+    <Tab.Navigator
+      detachInactiveScreens
+      initialRouteName="home"
+      screenOptions={screenOptions}
+    >
+      <Tab.Screen
+        name="home"
+        component={Home}
+        options={({ navigation: tabNav }) => ({
+          ...generateScreenOptions({
+            icon: "home",
+          }),
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                style={[
+                  commonStyles.leftRightBtnStyle,
+                  commonStyles.tabNavBtnExtra,
+                ]}
+                onPress={() => {
+                  tabNav.navigate("profile");
+                }}
+              >
+                {user?.image ? (
+                  // TODO: replace "source={require("assets/categorytemp.png")}" with "src={user.image}"
                   <Image
-                    source={require("assets/cart.png")}
-                    style={{ height: vs(spacing.md), width: vs(spacing.md) }}
+                    source={require("assets/user.png")}
+                    style={styles.profilePicture}
                   />
-                </TouchableOpacity>
-              );
-            },
-            headerStyle: styles.headerStyle,
-          })}
-        />
-        <Tab.Screen
-          name="notification"
-          component={Notifications}
-          options={{
-            ...generateScreenOptions({
-              icon: "bell",
-            }),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="orders"
-          component={Orders}
-          options={{
-            ...generateScreenOptions({
-              icon: "log",
-            }),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="profile"
-          component={Profile}
-          options={{
-            ...generateScreenOptions({
-              icon: "person",
-            }),
-            headerShown: false,
-          }}
-        />
-      </Tab.Navigator>
-    </SafeAreaView>
+                ) : (
+                  <Octicons
+                    name="person"
+                    size={vs(spacing.lg)}
+                    color={colors.black}
+                  />
+                )}
+              </TouchableOpacity>
+            );
+          },
+          headerRight: () => {
+            return (
+              <TouchableOpacity
+                style={[
+                  commonStyles.leftRightBtnStyle,
+                  commonStyles.tabNavBtnExtra,
+                  { backgroundColor: colors.primary },
+                ]}
+                onPress={() => {
+                  mainNav.navigate("cart");
+                }}
+              >
+                <Image
+                  source={require("assets/cart.png")}
+                  style={commonStyles.leftRightBtnImageStyle}
+                />
+              </TouchableOpacity>
+            );
+          },
+          headerStyle: commonStyles.tabNavHeader,
+        })}
+      />
+      <Tab.Screen
+        name="notification"
+        component={Notifications}
+        options={{
+          ...generateScreenOptions({
+            icon: "bell",
+          }),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="orders"
+        component={Orders}
+        options={{
+          ...generateScreenOptions({
+            icon: "log",
+          }),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="profile"
+        component={Profile}
+        options={{
+          ...generateScreenOptions({
+            icon: "person",
+          }),
+          headerShown: false,
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -167,10 +170,6 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
  */
 const makeStyles = (colors: Colors) =>
   StyleSheet.create({
-    headerStyle: {
-      height: vs(100),
-      backgroundColor: colors.background,
-    },
     container: {
       backgroundColor: colors.background,
       borderTopWidth: 0,
@@ -181,19 +180,6 @@ const makeStyles = (colors: Colors) =>
     },
     tabBtn: {
       marginTop: vs(spacing.md),
-    },
-    userbtn: {
-      height: vs(40),
-      width: vs(40),
-      marginHorizontal: vs(spacing.lg),
-      marginTop: vs(spacing.sm),
-      backgroundColor: colors.grayX11,
-      borderRadius: "100%",
-      overflow: "hidden",
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      position: "relative",
     },
     profilePicture: {
       height: vs(40),

@@ -9,14 +9,18 @@ export interface Category {
 }
 interface CategoryState {
   categories: Category[];
-  selectedCategory: string;
+  selectedCategory: Category;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: CategoryState = {
   categories: [],
-  selectedCategory: "",
+  selectedCategory: {
+    name: "All",
+    slug: "all",
+    url: "",
+  },
   loading: false,
   error: null,
 };
@@ -56,7 +60,7 @@ const categorySlice = createSlice({
         const { data } = action.payload;
         state.categories = [{ name: "All", slug: "all", url: "" }, ...data];
         state.loading = false;
-        state.selectedCategory = "all";
+        state.selectedCategory = { name: "All", slug: "all", url: "" };
       })
       .addCase(fetchCategoriesThunk.rejected, (state, action) => {
         state.loading = false;
@@ -68,7 +72,9 @@ const categorySlice = createSlice({
 export const { setSelectedCategory } = categorySlice.actions;
 export const selectCategories = (state: any) => state.categories.categories;
 export const selectSelectedCategory = (state: any) =>
-  state.categories.selectedCategory;
+  state.categories.selectedCategory.slug;
+export const selectSelectedCategoryName = (state: any) =>
+  state.categories.selectedCategory.name;
 export const selectCategoryLoading = (state: any) => state.categories.loading;
 export const selectCategoryError = (state: any) => state.categories.error;
 

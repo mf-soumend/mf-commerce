@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { FC } from "react";
 import { useAppDispatch, useAppSelector } from "src/store";
 import {
   Category,
@@ -16,12 +16,14 @@ import {
   selectSelectedCategory,
   setSelectedCategory,
 } from "slices/categorySlice";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import Skeleton from "./skeleton";
+import { PrimaryScreenProps } from "src/navigation";
 
 const VerticalCategories = () => {
+  const navigation = useNavigation<PrimaryScreenProps<"shopHome">>();
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
   const styles = makeStyle(colors);
@@ -29,8 +31,11 @@ const VerticalCategories = () => {
   const hasError = useAppSelector(selectCategoryError);
   const selectedCategory = useAppSelector(selectSelectedCategory);
   const categories = useAppSelector<Category[]>(selectCategories);
-  const selectCategory = (category: string) => {
+  const selectCategory = (category: { slug: string }) => {
     dispatch(setSelectedCategory(category));
+    if (category.slug !== "all") {
+      navigation.navigate("productList");
+    }
   };
   const CategoryLoader = () => {
     return (
@@ -69,7 +74,7 @@ const VerticalCategories = () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    selectCategory(item.slug);
+                    selectCategory(item);
                   }}
                 >
                   <View style={styles.category}>
@@ -109,16 +114,18 @@ export default VerticalCategories;
 const makeStyle = (colors: Colors) =>
   StyleSheet.create({
     container: {
-      paddingLeft: vs(spacing.lg),
+      marginBottom: vs(spacing.md),
     },
     header: {
       fontFamily: typography.semiBold,
       fontSize: fontSize.h3,
       color: colors.text,
+      paddingLeft: vs(spacing.lg),
     },
     scrollViewStyle: {
       marginTop: vs(spacing.md),
       gap: vs(spacing.md),
+      paddingHorizontal: vs(spacing.lg),
     },
     loader: {
       height: vs(56),

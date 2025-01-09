@@ -10,11 +10,11 @@ import React, {
 import { fetchAllProducts, Product, ProductPayload } from "src/service";
 import ProductsCard from "./productsCard";
 import { useTheme } from "@react-navigation/native";
-import { Colors, spacing } from "src/theme";
+import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import { selectSelectedCategory, useAppSelector } from "src/store";
 
-const ProductListings = () => {
+const ProductListings = ({ showTitle = false, title = "" }) => {
   const selectedCategory = useAppSelector(selectSelectedCategory);
   const pageLoadingState = useRef<Record<number, boolean>>({});
   const [productsData, setProductsData] = useState<Product[]>([]);
@@ -82,6 +82,7 @@ const ProductListings = () => {
   return (
     <View style={styles.container}>
       {!!error && <Text style={styles.errorText}>{error}</Text>}
+      {showTitle && <Text style={styles.title}>{`${title} (${total})`}</Text>}
       <FlatList
         data={productsData}
         numColumns={2}
@@ -106,7 +107,13 @@ const makeStyles = (colors: Colors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: vs(spacing.md),
+    },
+    title: {
+      fontSize: fontSize.h3,
+      fontFamily: typography.semiBold,
+      paddingHorizontal: vs(spacing.lg),
+      marginBottom: vs(spacing.md),
+      color: colors.text,
     },
     listWrapper: {
       paddingHorizontal: vs(spacing.md),
@@ -117,6 +124,7 @@ const makeStyles = (colors: Colors) =>
     errorText: {
       paddingVertical: vs(spacing.sm),
       paddingHorizontal: vs(spacing.lg),
+      fontFamily: typography.medium,
       color: colors.danger,
       textAlign: "center",
     },
