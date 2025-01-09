@@ -5,9 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TabScreenProps } from "src/navigation";
 import { useAppDispatch } from "src/store";
 import { fetchCategoriesThunk } from "src/store/slices/categorySlice";
-import { Colors, spacing } from "src/theme";
-import { verticalScale as vs } from "src/utils";
+import { Colors } from "src/theme";
 import VerticalCategories from "src/components/verticalCategories";
+import ProductListings from "src/components/productListings";
 
 const Home: FC<TabScreenProps<"home">> = () => {
   const { colors } = useTheme();
@@ -22,6 +22,7 @@ const Home: FC<TabScreenProps<"home">> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <VerticalCategories />
+      <ProductListings />
     </SafeAreaView>
   );
 };

@@ -45,4 +45,6 @@ export const colors = {
   tabDarkPrimary: "#8E6CEF",
   tabDarkSecondary: "#FFFFFF80",
   textSecondaryDark: "#272727",
+  cardBgLight: "#F4F4F4",
+  cardBgDark: "#342F3F",
 };
