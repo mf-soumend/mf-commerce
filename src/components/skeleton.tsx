@@ -14,6 +14,8 @@ export interface SkeletonProps {
   highlight: string;
   children: ReactElement;
   borderRadius?: number | string;
+  loading?: boolean;
+  width?: number;
 }
 
 const Skeleton: React.FC<SkeletonProps> = ({
@@ -21,6 +23,8 @@ const Skeleton: React.FC<SkeletonProps> = ({
   background,
   highlight,
   borderRadius = 4,
+  loading = true,
+  width,
 }) => {
   const [layout, setLayout] = React.useState<{
     width: number;
@@ -43,8 +47,16 @@ const Skeleton: React.FC<SkeletonProps> = ({
 
   if (!layout) {
     return (
-      <View onLayout={(e) => setLayout(e.nativeEvent.layout)}>{children}</View>
+      <View
+        style={width ? { width: width } : {}}
+        onLayout={(e) => setLayout(e.nativeEvent.layout)}
+      >
+        {children}
+      </View>
     );
+  }
+  if (!loading) {
+    return children;
   }
 
   return (

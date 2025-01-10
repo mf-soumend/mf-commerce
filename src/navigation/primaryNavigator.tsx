@@ -16,6 +16,7 @@ import Search from "src/screens/search";
 import { ArrowLeft2 } from "iconsax-react-native";
 import { verticalScale as vs } from "src/utils";
 import { spacing } from "src/theme";
+import ProductDetails from "src/screens/productDetails";
 
 export type PrimaryParamList = {
   login: undefined;
@@ -23,6 +24,7 @@ export type PrimaryParamList = {
   cart: undefined;
   productList: undefined;
   search: undefined;
+  productDetails: { id: number };
 };
 export type PrimaryScreenProps<T extends keyof PrimaryParamList> =
   NativeStackScreenProps<PrimaryParamList, T>;
@@ -72,6 +74,10 @@ export const PrimaryNavigator = (props: NavigationProps) => {
             />
             <PrimaryStack.Screen name="cart" component={Cart} />
             <PrimaryStack.Screen name="search" component={Search} />
+            <PrimaryStack.Screen
+              name="productDetails"
+              component={ProductDetails}
+            />
             <PrimaryStack.Screen name="productList" component={ProductList} />
           </>
         ) : (

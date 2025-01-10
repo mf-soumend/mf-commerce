@@ -53,3 +53,7 @@ export const fetchAllProducts = async (
     }
   );
 };
+
+export const getSingleProduct = (id: number) => {
+  return api.get(endPoints.product.singleProductDetails + id);
+};

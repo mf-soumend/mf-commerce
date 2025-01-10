@@ -1,15 +1,22 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { Product } from "src/service";
 import { verticalScale as vs } from "src/utils";
 import { Colors, fontSize, spacing, typography } from "src/theme";
+import { PrimaryScreenProps } from "src/navigation";
 
 const ProductsCard = ({ product }: { product: Product }) => {
+  const navigation = useNavigation<PrimaryScreenProps<"productDetails">>();
   const { colors } = useTheme();
   const styles = makeStyle(colors);
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onPress={() => {
+        navigation.navigate("productDetails", { id: product.id });
+      }}
+    >
       <View style={styles.imageWrapper}>
         {product.thumbnail ? (
           <Image style={styles.productImage} src={product.thumbnail} />
@@ -26,7 +33,7 @@ const ProductsCard = ({ product }: { product: Product }) => {
         </Text>
         <Text style={styles.price}>{`$ ${product.price}`}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
