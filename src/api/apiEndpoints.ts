@@ -4,6 +4,7 @@ export const endPoints = {
     category: "products/categories",
     getProducts: "products",
     getProductsByCategory: "products/category/",
+    searchProducts: "products/search",
   },
   cart: {},
 };

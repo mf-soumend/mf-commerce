@@ -6,6 +6,7 @@ import { verticalScale as vs } from "src/utils";
 import { Colors, fontSize, spacing } from "src/theme";
 import { SearchNormal1 } from "iconsax-react-native";
 import { useTheme } from "@react-navigation/native";
+import ProductListings from "src/components/productListings";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -30,8 +31,7 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
 
   // Debounced search handler
   const handleSearch = (value: string) => {
-    console.log("Searching for:", value);
-    // Add your API call or search logic here
+    setSearchTerm(value);
   };
 
   const debouncedHandleSearch = useCallback(debounce(handleSearch, 500), []);
@@ -52,9 +52,10 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
                 variant="Broken"
               />
             )}
-            autoFocus
+            onPress={() => {
+              inputRef.current?.focus();
+            }}
             onChangeText={(value) => {
-              setSearchTerm(value);
               debouncedHandleSearch(value);
             }}
           />
@@ -71,7 +72,7 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Search Term: {searchTerm}</Text>
+      <ProductListings activateSearch searchItem={searchTerm} />
     </View>
   );
 };
@@ -82,8 +83,7 @@ const makeStyle = (colors: Colors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+      paddingTop: vs(spacing.md),
     },
     searchWrapper: {
       width: screenWidth - vs(100),

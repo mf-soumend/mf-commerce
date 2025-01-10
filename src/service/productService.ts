@@ -7,6 +7,7 @@ export interface ProductPayload {
   order?: "asc" | "dsc";
   select?: string[];
   selectedCategory: string;
+  searchItem?: string;
 }
 
 export interface Product {
@@ -26,7 +27,17 @@ export interface ProductsResponse {
 export const fetchAllProducts = async (
   productPayload: ProductPayload
 ): Promise<ProductsResponse> => {
-  if (productPayload.selectedCategory === "all") {
+  if (productPayload.searchItem) {
+    return api.get(endPoints.product.searchProducts, {
+      params: {
+        q: productPayload.searchItem,
+        limit: productPayload.limit,
+        skip: productPayload.skip,
+        shortBy: productPayload.shortBy,
+        order: productPayload.order,
+      },
+    });
+  } else if (productPayload.selectedCategory === "all") {
     return api.get(endPoints.product.getProducts, {
       params: {
         ...productPayload,

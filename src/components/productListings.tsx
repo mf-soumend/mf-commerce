@@ -22,8 +22,11 @@ import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import { selectSelectedCategory, useAppSelector } from "src/store";
+import ResultNotFound from "./resultNotFound";
 
 const ProductListings = ({
+  activateSearch = false,
+  searchItem = "",
   showTitle = false,
   title = "",
   onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {},
@@ -55,6 +58,10 @@ const ProductListings = ({
           select: ["title", "price", "thumbnail"],
           selectedCategory: selectedCategory,
         };
+        if (activateSearch) {
+          productPayload.searchItem = searchItem;
+          productPayload.selectedCategory = "all";
+        }
         const res = await fetchAllProducts(productPayload);
 
         setProductsData((prevData) =>
@@ -70,7 +77,7 @@ const ProductListings = ({
         setIsLoadingMore(false);
       }
     },
-    [limit, selectedCategory]
+    [limit, selectedCategory, searchItem]
   );
 
   const onRefresh = useCallback(() => {
@@ -97,7 +104,7 @@ const ProductListings = ({
   useEffect(() => {
     pageLoadingState.current = {};
     fetchProducts(0);
-  }, [selectedCategory]);
+  }, [selectedCategory, searchItem]);
 
   const renderItem = useCallback(
     ({ item }: { item: Product }) => <MemoizedProductsCard product={item} />,
@@ -106,10 +113,20 @@ const ProductListings = ({
 
   const keyExtractor = useCallback((item: Product) => item.id.toString(), []);
 
-  return (
+  return activateSearch && total === 0 ? (
+    searchItem === "" ? null : (
+      <ResultNotFound />
+    )
+  ) : (
     <View style={styles.container}>
       {!!error && <Text style={styles.errorText}>{error}</Text>}
       {showTitle && <Text style={styles.title}>{`${title} (${total})`}</Text>}
+      {activateSearch && total > 0 && (
+        <Text style={styles.title}>{`${total} Result${
+          total > 1 ? "s" : ""
+        } found`}</Text>
+      )}
+
       <Animated.FlatList
         data={productsData}
         numColumns={2}
