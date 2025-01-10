@@ -1,10 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { Product } from "src/service";
 import { verticalScale as vs } from "src/utils";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { PrimaryScreenProps } from "src/navigation";
+import Image from "./image";
 
 const ProductsCard = ({ product }: { product: Product }) => {
   const navigation = useNavigation<PrimaryScreenProps<"productDetails">>();
