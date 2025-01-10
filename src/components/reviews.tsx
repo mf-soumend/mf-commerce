@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
-import { verticalScale as vs } from "src/utils";
+import { getDateTime, verticalScale as vs } from "src/utils";
 import { ProfileCircle } from "iconsax-react-native";
 
 const Reviews = ({ reviewList }: { reviewList: [] }) => {
@@ -40,6 +40,17 @@ const Reviews = ({ reviewList }: { reviewList: [] }) => {
               ]}
             >
               {review.comment}
+            </Text>
+            <Text
+              style={[
+                styles.name,
+                {
+                  marginLeft: vs(spacing.xl + spacing.xs),
+                  fontFamily: typography.medium,
+                },
+              ]}
+            >
+              {getDateTime(review.date)}
             </Text>
           </View>
         );
