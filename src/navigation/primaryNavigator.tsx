@@ -10,14 +10,19 @@ import { TabNavigator } from "./tabNavigator";
 import Cart from "src/screens/cart";
 import ProductList from "src/screens/productList";
 import { useTheme } from "@react-navigation/native";
-import { Image, TouchableOpacity, useColorScheme } from "react-native";
+import { TouchableOpacity } from "react-native";
 import makeCommanStyles from "styles";
+import Search from "src/screens/search";
+import { ArrowLeft2 } from "iconsax-react-native";
+import { verticalScale as vs } from "src/utils";
+import { spacing } from "src/theme";
 
 export type PrimaryParamList = {
   login: undefined;
   shopHome: undefined;
   cart: undefined;
   productList: undefined;
+  search: undefined;
 };
 export type PrimaryScreenProps<T extends keyof PrimaryParamList> =
   NativeStackScreenProps<PrimaryParamList, T>;
@@ -25,7 +30,6 @@ const PrimaryStack = createNativeStackNavigator<PrimaryParamList>();
 export const PrimaryNavigator = (props: NavigationProps) => {
   const isUserAuthenticated = useAppSelector(selectIsAuthenticated);
   const { colors } = useTheme();
-  const scheme = useColorScheme();
   const commonStyles = makeCommanStyles(colors);
   return (
     <PrimaryStack.Navigator
@@ -43,13 +47,10 @@ export const PrimaryNavigator = (props: NavigationProps) => {
                 navigation.goBack();
               }}
             >
-              <Image
-                source={
-                  scheme === "dark"
-                    ? require("assets/arrowleftDark.png")
-                    : require("assets/arrowleft.png")
-                }
-                style={commonStyles.leftRightBtnImageStyle}
+              <ArrowLeft2
+                size={vs(spacing.md)}
+                variant="Broken"
+                color={colors.text}
               />
             </TouchableOpacity>
           );
@@ -64,6 +65,7 @@ export const PrimaryNavigator = (props: NavigationProps) => {
             component={TabNavigator}
           />
           <PrimaryStack.Screen name="cart" component={Cart} />
+          <PrimaryStack.Screen name="search" component={Search} />
           <PrimaryStack.Screen name="productList" component={ProductList} />
         </>
       ) : (

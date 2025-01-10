@@ -11,13 +11,14 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { loginUser, useAppDispatch } from "src/store";
 import Button from "src/components/button";
-import { Colors, fontSize, typography } from "src/theme";
+import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import Input from "src/components/input";
 import { useFormik } from "formik";
 import { initialLoginData, loginSchema } from "validation";
 import { login } from "src/service";
 import OverlayActivityIndicator from "src/components/overlayActivityIndicator";
+import { Eye, EyeSlash } from "iconsax-react-native";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -70,7 +71,21 @@ const Login = () => {
               onBlur={formik.handleBlur("password")}
               onChangeText={formik.handleChange("password")}
               secureTextEntry={!showPassword}
-              rightIcon={!showPassword ? "eye-slash" : "eye"}
+              rightIcon={(error) =>
+                !showPassword ? (
+                  <EyeSlash
+                    size={vs(spacing.md)}
+                    color={!error ? colors.tertiary : colors.danger}
+                    variant="Broken"
+                  />
+                ) : (
+                  <Eye
+                    size={vs(spacing.md)}
+                    color={!error ? colors.tertiary : colors.danger}
+                    variant="Broken"
+                  />
+                )
+              }
               onPressRightIcon={() => {
                 setShowPassword((val) => !val);
               }}

@@ -9,13 +9,19 @@ import { useTheme } from "@react-navigation/native";
 import { Colors, spacing } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import { PrimaryScreenProps } from "./primaryNavigator";
-import Octicons from "@expo/vector-icons/Octicons";
 import Home from "src/screens/home";
 import Profile from "src/screens/profile";
 import Notifications from "src/screens/notifications";
 import Orders from "src/screens/orders";
 import { selectUser, useAppSelector } from "src/store";
 import makeCommanStyles from "styles";
+import {
+  Home2,
+  NotificationBing,
+  Receipt1,
+  Profile as Prf,
+  Bag2,
+} from "iconsax-react-native";
 
 export type TabParamsList = {
   home: undefined;
@@ -59,12 +65,10 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
   const generateScreenOptions = ({
     icon,
   }: {
-    icon?: "home" | "bell" | "log" | "person";
+    icon: (color: string) => React.JSX.Element;
   }): BottomTabNavigationOptions => ({
     tabBarShowLabel: false,
-    tabBarIcon: ({ color }) => (
-      <Octicons name={icon} size={vs(spacing.lg)} color={color} />
-    ),
+    tabBarIcon: ({ color }) => icon(color),
   });
   return (
     <Tab.Navigator
@@ -77,7 +81,9 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
         component={Home}
         options={({ navigation: tabNav }) => ({
           ...generateScreenOptions({
-            icon: "home",
+            icon: (color: string) => (
+              <Home2 size={vs(spacing.lg)} color={color} variant="Broken" />
+            ),
           }),
           headerTitle: "",
           headerShadowVisible: false,
@@ -99,9 +105,9 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
                     style={styles.profilePicture}
                   />
                 ) : (
-                  <Octicons
-                    name="person"
-                    size={vs(spacing.lg)}
+                  <Prf
+                    variant={"Broken"}
+                    size={vs(spacing.md)}
                     color={colors.black}
                   />
                 )}
@@ -120,9 +126,10 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
                   mainNav.navigate("cart");
                 }}
               >
-                <Image
-                  source={require("assets/cart.png")}
-                  style={commonStyles.leftRightBtnImageStyle}
+                <Bag2
+                  variant={"Broken"}
+                  size={vs(spacing.md)}
+                  color={colors.white}
                 />
               </TouchableOpacity>
             );
@@ -135,7 +142,13 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
         component={Notifications}
         options={{
           ...generateScreenOptions({
-            icon: "bell",
+            icon: (color: string) => (
+              <NotificationBing
+                size={vs(spacing.lg)}
+                color={color}
+                variant="Broken"
+              />
+            ),
           }),
           headerShown: false,
         }}
@@ -145,7 +158,9 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
         component={Orders}
         options={{
           ...generateScreenOptions({
-            icon: "log",
+            icon: (color) => (
+              <Receipt1 size={vs(spacing.lg)} color={color} variant="Broken" />
+            ),
           }),
           headerShown: false,
         }}
@@ -155,7 +170,9 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
         component={Profile}
         options={{
           ...generateScreenOptions({
-            icon: "person",
+            icon: (color) => (
+              <Prf size={vs(spacing.lg)} color={color} variant="Broken" />
+            ),
           }),
           headerShown: false,
         }}
