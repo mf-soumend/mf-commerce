@@ -22,9 +22,7 @@ const ProductDetails: FC<PrimaryScreenProps<"productDetails">> = ({
     setError(false);
     getSingleProduct(id)
       .then((res) => {
-        setTimeout(() => {
-          setProduct(res);
-        }, 3000);
+        setProduct(res);
       })
       .catch(() => {
         setError(true);
