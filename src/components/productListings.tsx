@@ -1,4 +1,13 @@
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Animated,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, {
   useEffect,
   useState,
@@ -14,7 +23,12 @@ import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import { selectSelectedCategory, useAppSelector } from "src/store";
 
-const ProductListings = ({ showTitle = false, title = "" }) => {
+const ProductListings = ({
+  showTitle = false,
+  title = "",
+  onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {},
+  clamped = 0,
+}) => {
   const selectedCategory = useAppSelector(selectSelectedCategory);
   const pageLoadingState = useRef<Record<number, boolean>>({});
   const [productsData, setProductsData] = useState<Product[]>([]);
@@ -22,8 +36,9 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
   const [page, setPage] = useState(0);
   const [error, setError] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const { colors } = useTheme();
-  const styles = useMemo(() => makeStyles(colors), [colors]);
+  const styles = useMemo(() => makeStyles(colors, clamped), [colors]);
   const limit = 10;
   const MemoizedProductsCard = memo(ProductsCard);
 
@@ -33,6 +48,7 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
 
       pageLoadingState.current[pageNo] = true;
       try {
+        setIsLoadingMore(true);
         const productPayload: ProductPayload = {
           limit,
           skip: pageNo * limit,
@@ -51,6 +67,7 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
       } finally {
         setRefreshing(false);
         pageLoadingState.current[pageNo] = false;
+        setIsLoadingMore(false);
       }
     },
     [limit, selectedCategory]
@@ -66,6 +83,16 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
       fetchProducts(page + 1);
     }
   }, [fetchProducts, page, total, limit]);
+  const renderLoader = () => {
+    if (isLoadingMore) {
+      return (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      );
+    }
+    return null;
+  };
 
   useEffect(() => {
     pageLoadingState.current = {};
@@ -83,7 +110,7 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
     <View style={styles.container}>
       {!!error && <Text style={styles.errorText}>{error}</Text>}
       {showTitle && <Text style={styles.title}>{`${title} (${total})`}</Text>}
-      <FlatList
+      <Animated.FlatList
         data={productsData}
         numColumns={2}
         renderItem={renderItem}
@@ -96,6 +123,10 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
         }
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
+        onScroll={(e) => {
+          onScroll(e);
+        }}
+        ListFooterComponent={renderLoader}
       />
     </View>
   );
@@ -103,7 +134,7 @@ const ProductListings = ({ showTitle = false, title = "" }) => {
 
 export default ProductListings;
 
-const makeStyles = (colors: Colors) =>
+const makeStyles = (colors: Colors, clamped: number) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -120,6 +151,7 @@ const makeStyles = (colors: Colors) =>
     },
     listContainer: {
       gap: vs(spacing.md),
+      paddingTop: clamped,
     },
     errorText: {
       paddingVertical: vs(spacing.sm),
@@ -127,5 +159,11 @@ const makeStyles = (colors: Colors) =>
       fontFamily: typography.medium,
       color: colors.danger,
       textAlign: "center",
+    },
+    loaderContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      paddingVertical: vs(spacing.md),
     },
   });

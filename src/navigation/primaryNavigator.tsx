@@ -10,7 +10,7 @@ import { TabNavigator } from "./tabNavigator";
 import Cart from "src/screens/cart";
 import ProductList from "src/screens/productList";
 import { useTheme } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
+import { StatusBar, TouchableOpacity, useColorScheme } from "react-native";
 import makeCommanStyles from "styles";
 import Search from "src/screens/search";
 import { ArrowLeft2 } from "iconsax-react-native";
@@ -30,51 +30,58 @@ const PrimaryStack = createNativeStackNavigator<PrimaryParamList>();
 export const PrimaryNavigator = (props: NavigationProps) => {
   const isUserAuthenticated = useAppSelector(selectIsAuthenticated);
   const { colors } = useTheme();
+  const scheme = useColorScheme();
   const commonStyles = makeCommanStyles(colors);
   return (
-    <PrimaryStack.Navigator
-      initialRouteName={isUserAuthenticated ? "shopHome" : "login"}
-      screenOptions={({ navigation }) => ({
-        headerShown: true,
-        headerStyle: commonStyles.header,
-        title: "",
-        headerShadowVisible: false,
-        headerLeft: () => {
-          return (
-            <TouchableOpacity
-              style={commonStyles.leftRightBtnStyle}
-              onPress={() => {
-                navigation.goBack();
-              }}
-            >
-              <ArrowLeft2
-                size={vs(spacing.md)}
-                variant="Broken"
-                color={colors.text}
-              />
-            </TouchableOpacity>
-          );
-        },
-      })}
-    >
-      {isUserAuthenticated ? (
-        <>
+    <>
+      <StatusBar
+        backgroundColor={colors.background}
+        barStyle={scheme === "dark" ? "light-content" : "dark-content"}
+      />
+      <PrimaryStack.Navigator
+        initialRouteName={isUserAuthenticated ? "shopHome" : "login"}
+        screenOptions={({ navigation }) => ({
+          headerShown: true,
+          headerStyle: commonStyles.header,
+          title: "",
+          headerShadowVisible: false,
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                style={commonStyles.leftRightBtnStyle}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <ArrowLeft2
+                  size={vs(spacing.md)}
+                  variant="Broken"
+                  color={colors.text}
+                />
+              </TouchableOpacity>
+            );
+          },
+        })}
+      >
+        {isUserAuthenticated ? (
+          <>
+            <PrimaryStack.Screen
+              name="shopHome"
+              options={{ headerShown: false }}
+              component={TabNavigator}
+            />
+            <PrimaryStack.Screen name="cart" component={Cart} />
+            <PrimaryStack.Screen name="search" component={Search} />
+            <PrimaryStack.Screen name="productList" component={ProductList} />
+          </>
+        ) : (
           <PrimaryStack.Screen
-            name="shopHome"
+            name="login"
+            component={Login}
             options={{ headerShown: false }}
-            component={TabNavigator}
           />
-          <PrimaryStack.Screen name="cart" component={Cart} />
-          <PrimaryStack.Screen name="search" component={Search} />
-          <PrimaryStack.Screen name="productList" component={ProductList} />
-        </>
-      ) : (
-        <PrimaryStack.Screen
-          name="login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-      )}
-    </PrimaryStack.Navigator>
+        )}
+      </PrimaryStack.Navigator>
+    </>
   );
 };
