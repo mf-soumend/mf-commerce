@@ -1,5 +1,11 @@
 export const endPoints = {
   auth: { login: "auth/login" },
-  product: {},
+  product: {
+    category: "products/categories",
+    getProducts: "products",
+    getProductsByCategory: "products/category/",
+    searchProducts: "products/search",
+    singleProductDetails: "products/",
+  },
   cart: {},
 };

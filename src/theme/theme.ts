@@ -16,6 +16,8 @@ const theme: ThemeWithMode = {
   light: {
     primary: colors.primary,
     text: colors.black,
+    textSecondary: colors.textSecondaryDark,
+    paragraph: colors.paragraph,
     background: colors.white,
     backgroundSecondary: colors.cultured,
     tertiary: colors.yankeesBlue,
@@ -23,11 +25,15 @@ const theme: ThemeWithMode = {
     btnTextSecondary: colors.chineseSilver,
     border: colors.platinum,
     placeholderText: colors.gray,
-    card: colors.white,
+    card: colors.cardBgLight,
+    tabBarPrimary: colors.tabPrimary,
+    tabBarSecondary: colors.tabSecondary,
   },
   dark: {
     primary: colors.primary,
     text: colors.white,
+    textSecondary: colors.white,
+    paragraph: colors.paragraphDark,
     background: colors.darkBg,
     backgroundSecondary: colors.culturedDark,
     tertiary: colors.lightGray,
@@ -35,7 +41,9 @@ const theme: ThemeWithMode = {
     btnTextSecondary: colors.silverFoil,
     border: colors.darkCharcole,
     placeholderText: colors.gray,
-    card: colors.yankeesBlue,
+    card: colors.cardBgDark,
+    tabBarPrimary: colors.tabDarkPrimary,
+    tabBarSecondary: colors.tabDarkSecondary,
   },
 };
 

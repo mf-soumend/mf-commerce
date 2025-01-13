@@ -40,4 +40,13 @@ export const colors = {
   freeBlue: "#02655c",
   boxShadow: "#e3e3e3",
   blue: "#3367d6",
+  tabPrimary: "#8E6CEF",
+  tabSecondary: "#27272780",
+  tabDarkPrimary: "#8E6CEF",
+  tabDarkSecondary: "#FFFFFF80",
+  textSecondaryDark: "#272727",
+  cardBgLight: "#F4F4F4",
+  cardBgDark: "#342F3F",
+  paragraph: "#27272780",
+  paragraphDark: "#FFFFFF80",
 };

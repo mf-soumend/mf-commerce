@@ -42,6 +42,11 @@ interface ThemeColors {
    * card: The background color of card-like elements, such as headers, tab bars etc.
    */
   card: string;
+
+  tabBarPrimary: string;
+  tabBarSecondary: string;
+  textSecondary: string;
+  paragraph: string;
 }
 
 export interface ThemeWithMode {
