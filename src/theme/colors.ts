@@ -49,4 +49,5 @@ export const colors = {
   cardBgDark: "#342F3F",
   paragraph: "#27272780",
   paragraphDark: "#FFFFFF80",
+  backdrop: "#00000080",
 };

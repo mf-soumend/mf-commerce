@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Animated,
+  Keyboard,
   NativeScrollEvent,
   NativeSyntheticEvent,
   RefreshControl,
@@ -20,7 +21,7 @@ import { fetchAllProducts, Product, ProductPayload } from "src/service";
 import ProductsCard from "./productsCard";
 import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
-import { verticalScale as vs } from "src/utils";
+import { getParam, verticalScale as vs } from "src/utils";
 import { selectSelectedCategory, useAppSelector } from "src/store";
 import ResultNotFound from "./resultNotFound";
 
@@ -30,6 +31,7 @@ const ProductListings = ({
   showTitle = false,
   title = "",
   onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {},
+  shortBy = "recommended",
   clamped = 0,
 }) => {
   const selectedCategory = useAppSelector(selectSelectedCategory);
@@ -62,7 +64,13 @@ const ProductListings = ({
           productPayload.searchItem = searchItem;
           productPayload.selectedCategory = "all";
         }
+        if (shortBy !== "recommended") {
+          const shorting = getParam(shortBy);
+          productPayload.shortBy = shorting.shortBy;
+          productPayload.order = shorting.order;
+        }
         const res = await fetchAllProducts(productPayload);
+        console.log("res");
 
         setProductsData((prevData) =>
           pageNo === 0 ? res.products : [...prevData, ...res.products]
@@ -77,7 +85,7 @@ const ProductListings = ({
         setIsLoadingMore(false);
       }
     },
-    [limit, selectedCategory, searchItem]
+    [limit, selectedCategory, searchItem, shortBy]
   );
 
   const onRefresh = useCallback(() => {
@@ -89,7 +97,7 @@ const ProductListings = ({
     if (total > page * limit + limit) {
       fetchProducts(page + 1);
     }
-  }, [fetchProducts, page, total, limit]);
+  }, [fetchProducts, page, total, limit, shortBy]);
   const renderLoader = () => {
     if (isLoadingMore) {
       return (
@@ -104,7 +112,7 @@ const ProductListings = ({
   useEffect(() => {
     pageLoadingState.current = {};
     fetchProducts(0);
-  }, [selectedCategory, searchItem]);
+  }, [selectedCategory, searchItem, shortBy]);
 
   const renderItem = useCallback(
     ({ item }: { item: Product }) => <MemoizedProductsCard product={item} />,
@@ -142,6 +150,7 @@ const ProductListings = ({
         onEndReachedThreshold={0.5}
         onScroll={(e) => {
           onScroll(e);
+          Keyboard.dismiss();
         }}
         ListFooterComponent={renderLoader}
       />
