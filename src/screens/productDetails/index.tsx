@@ -95,7 +95,7 @@ const makeStyle = (colors: Colors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: vs(spacing.md),
+      marginTop: vs(spacing.md),
     },
     listContainer: {
       gap: vs(spacing.sm),
@@ -113,6 +113,7 @@ const makeStyle = (colors: Colors) =>
     details: {
       padding: vs(spacing.lg),
       gap: vs(spacing.md),
+      paddingBottom: vs(spacing.xxxl),
     },
     title: {
       color: colors.text,

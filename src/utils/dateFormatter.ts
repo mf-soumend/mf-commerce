@@ -11,20 +11,20 @@ export const getDateTime = (timeStamp: number) => {
   if (days === 0) {
     if (hours === 0) {
       if (minutes === 0) {
-        return `${seconds}s ago`;
+        return `${seconds}second${seconds > 1 ? "s" : ""} ago`;
       } else {
-        return `${minutes}m ago`;
+        return `${minutes}minute${minutes > 1 ? "s" : ""} ago`;
       }
     } else {
-      return `${hours}h ago`;
+      return `${hours}hour${hours > 1 ? "s" : ""} ago`;
     }
-  } else if (days <= 365) {
-    return `${days}d ago`;
+  } else if (days <= 30) {
+    return `${days}day${days > 1 ? "s" : ""} ago`;
   } else {
     return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
       day: "2-digit",
-    }); // Return date in "MM/DD/YYYY" format
+      month: "short",
+      year: "numeric",
+    });
   }
 };

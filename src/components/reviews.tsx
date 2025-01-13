@@ -3,7 +3,8 @@ import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { getDateTime, verticalScale as vs } from "src/utils";
-import { ProfileCircle } from "iconsax-react-native";
+import StarRating from "./starRating";
+import Image from "./image";
 
 const Reviews = ({ reviewList }: { reviewList: [] }) => {
   const { colors } = useTheme();
@@ -14,11 +15,12 @@ const Reviews = ({ reviewList }: { reviewList: [] }) => {
         return (
           <View key={review.date + id}>
             <View style={styles.reviewerDetails}>
-              <ProfileCircle
-                size={vs(spacing.xl)}
-                color={colors.textSecondary}
-                variant="Bold"
-              />
+              <View style={styles.profilePic}>
+                <Image
+                  source={require("assets/user.png")}
+                  style={styles.userPic}
+                />
+              </View>
               <Text
                 style={[
                   styles.name,
@@ -29,23 +31,15 @@ const Reviews = ({ reviewList }: { reviewList: [] }) => {
               >
                 {review.reviewerName}
               </Text>
-              <Text
-                style={[styles.name, { color: colors.primary }]}
-              >{`${review.rating}/5`}</Text>
+              <StarRating count={review.rating} total={5} />
             </View>
-            <Text
-              style={[
-                styles.paragraph,
-                { marginLeft: vs(spacing.xl + spacing.xs) },
-              ]}
-            >
+            <Text style={[styles.paragraph, { marginTop: vs(spacing.xxs) }]}>
               {review.comment}
             </Text>
             <Text
               style={[
                 styles.name,
                 {
-                  marginLeft: vs(spacing.xl + spacing.xs),
                   fontFamily: typography.medium,
                 },
               ]}
@@ -67,10 +61,25 @@ const makeStyle = (colors: Colors) =>
       marginTop: vs(spacing.xs),
       gap: vs(spacing.md),
     },
+    profilePic: {
+      height: vs(40),
+      width: vs(40),
+      backgroundColor: colors.backgroundSecondary,
+      borderRadius: "100%",
+      overflow: "hidden",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    userPic: {
+      height: vs(40),
+      width: vs(40),
+    },
     name: {
       color: colors.text,
       fontFamily: typography.bold,
       fontSize: fontSize.h4,
+      includeFontPadding: false,
     },
     reviewerDetails: {
       flexDirection: "row",
