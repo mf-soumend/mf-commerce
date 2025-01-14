@@ -4,7 +4,7 @@ export interface ProductPayload {
   limit: number;
   skip: number;
   shortBy?: string;
-  order?: "asc" | "dsc";
+  order?: "asc" | "desc";
   select?: string[];
   selectedCategory: string;
   searchItem?: string;
