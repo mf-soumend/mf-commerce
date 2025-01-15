@@ -16,6 +16,12 @@ const makeCommanStyles = (colors: Colors) =>
       fontFamily: typography.medium,
       color: colors.text,
     },
+    primaryHeaderTitle: {
+      fontSize: fontSize.h3,
+      fontFamily: typography.bold,
+      color: colors.text,
+      marginTop: vs(spacing.xxl),
+    },
     tabNavBtnExtra: {
       marginHorizontal: vs(spacing.lg),
       marginTop: vs(36),

@@ -1,19 +1,48 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
+import Button from "./button";
+import { PrimaryParamList } from "src/navigation";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const ResultNotFound = () => {
+interface ResultNotFoundProps {
+  source?: ImageSourcePropType | undefined;
+  title: string;
+}
+
+const ResultNotFound = ({
+  source = require("assets/search.png"),
+  title,
+}: ResultNotFoundProps) => {
   const { colors } = useTheme();
   const styles = makeStyle(colors);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<PrimaryParamList>>();
+  const goToHome = () => {
+    if (navigation.canGoBack()) {
+      navigation.pop();
+    } else {
+      navigation.navigate("shopHome"); // Fallback navigation
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.resultWrapper}>
-        <Image source={require("assets/search.png")} style={styles.image} />
-        <Text style={styles.errorMessage}>
-          Sorry, we couldn't find any matching result for your Search.
-        </Text>
+        <Image source={source} style={styles.image} />
+        <Text style={styles.errorMessage}>{title}</Text>
+        <Button
+          title="Explore Categories"
+          onPress={goToHome}
+          titleStyle={{ paddingHorizontal: vs(spacing.lg) }}
+        />
       </View>
     </View>
   );

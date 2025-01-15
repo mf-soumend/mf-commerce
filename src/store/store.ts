@@ -5,6 +5,7 @@ import persistReducer from "redux-persist/es/persistReducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import userReducer from "slices/userSlice";
 import categorySlice from "slices/categorySlice";
+import cartSlice from "slices/cartSlice";
 
 const persistConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   categories: categorySlice,
+  cart: cartSlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

@@ -10,7 +10,12 @@ import { TabNavigator } from "./tabNavigator";
 import Cart from "src/screens/cart";
 import ProductList from "src/screens/productList";
 import { useTheme } from "@react-navigation/native";
-import { StatusBar, TouchableOpacity, useColorScheme } from "react-native";
+import {
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import makeCommanStyles from "styles";
 import Search from "src/screens/search";
 import { ArrowLeft2 } from "iconsax-react-native";
@@ -46,6 +51,7 @@ export const PrimaryNavigator = (props: NavigationProps) => {
           headerShown: true,
           headerStyle: commonStyles.header,
           title: "",
+          headerTitleAlign: "center",
           headerShadowVisible: false,
           headerLeft: () => {
             return (
@@ -72,7 +78,15 @@ export const PrimaryNavigator = (props: NavigationProps) => {
               options={{ headerShown: false }}
               component={TabNavigator}
             />
-            <PrimaryStack.Screen name="cart" component={Cart} />
+            <PrimaryStack.Screen
+              name="cart"
+              component={Cart}
+              options={{
+                headerTitle: () => (
+                  <Text style={commonStyles.primaryHeaderTitle}>Cart</Text>
+                ),
+              }}
+            />
             <PrimaryStack.Screen name="search" component={Search} />
             <PrimaryStack.Screen
               name="productDetails"

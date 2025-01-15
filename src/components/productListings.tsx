@@ -70,7 +70,6 @@ const ProductListings = ({
           productPayload.order = shorting.order;
         }
         const res = await fetchAllProducts(productPayload);
-        console.log("res");
 
         setProductsData((prevData) =>
           pageNo === 0 ? res.products : [...prevData, ...res.products]
@@ -123,7 +122,9 @@ const ProductListings = ({
 
   return activateSearch && total === 0 ? (
     searchItem === "" ? null : (
-      <ResultNotFound />
+      <ResultNotFound
+        title={"Sorry, we couldn't find any matching result for your Search."}
+      />
     )
   ) : (
     <View style={styles.container}>

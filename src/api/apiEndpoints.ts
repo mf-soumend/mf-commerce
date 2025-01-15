@@ -7,5 +7,7 @@ export const endPoints = {
     searchProducts: "products/search",
     singleProductDetails: "products/",
   },
-  cart: {},
+  cart: {
+    getCartDetails: "carts/user/",
+  },
 };
