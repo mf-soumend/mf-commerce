@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import React, { forwardRef } from "react";
+import React, { forwardRef, Ref } from "react";
 import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
@@ -42,7 +42,7 @@ export interface InputProps extends TextInputProps {
   onPressRightIcon?: () => void;
 }
 
-const Input = forwardRef<TextInput, InputProps>(
+const Input = forwardRef(
   (
     {
       label,
@@ -59,8 +59,8 @@ const Input = forwardRef<TextInput, InputProps>(
       error,
       onPressRightIcon,
       ...rest
-    },
-    ref
+    }: InputProps,
+    ref: Ref<TextInput>
   ) => {
     const { colors } = useTheme();
     const styles = makeStyle(colors);

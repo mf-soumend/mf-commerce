@@ -54,6 +54,6 @@ export const fetchAllProducts = async (
   );
 };
 
-export const getSingleProduct = (id: number) => {
+export const getSingleProduct = (id: number): Promise<any> => {
   return api.get(endPoints.product.singleProductDetails + id);
 };

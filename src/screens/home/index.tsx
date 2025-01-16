@@ -1,8 +1,14 @@
 import { useNavigation, useTheme } from "@react-navigation/native";
 import React, { FC, useEffect } from "react";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
-import { PrimaryScreenProps, TabScreenProps } from "src/navigation";
-import { useAppDispatch } from "src/store";
+import { PrimaryParamList, TabScreenProps } from "src/navigation";
+import {
+  fetchUserDetails,
+  selectUser,
+  useAppDispatch,
+  useAppSelector,
+} from "src/store";
 import { fetchCategoriesThunk } from "src/store/slices/categorySlice";
 import VerticalCategories from "src/components/verticalCategories";
 import ProductListings from "src/components/productListings";
@@ -12,12 +18,17 @@ import { Colors, fontSize, spacing } from "src/theme";
 import { SearchNormal1 } from "iconsax-react-native";
 
 const Home: FC<TabScreenProps<"home">> = () => {
-  const navigation = useNavigation<PrimaryScreenProps<"shopHome">>();
+  const { user } = useAppSelector(selectUser);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<PrimaryParamList>>();
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
   const styles = makeStyle(colors);
   const fetchCategoryList = () => {
     dispatch(fetchCategoriesThunk());
+  };
+  const saveUserDetails = () => {
+    dispatch(fetchUserDetails(user.id));
   };
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, vs(100));
@@ -26,8 +37,11 @@ const Home: FC<TabScreenProps<"home">> = () => {
     outputRange: [0, -100],
   });
   useEffect(() => {
-    fetchCategoryList();
-  }, []);
+    if (user) {
+      fetchCategoryList();
+      saveUserDetails();
+    }
+  }, [user]);
   return (
     <View style={styles.container}>
       <Animated.View

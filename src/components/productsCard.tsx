@@ -4,11 +4,13 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { Product } from "src/service";
 import { verticalScale as vs } from "src/utils";
 import { Colors, fontSize, spacing, typography } from "src/theme";
-import { PrimaryScreenProps } from "src/navigation";
+import { PrimaryParamList } from "src/navigation";
 import Image from "./image";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const ProductsCard = ({ product }: { product: Product }) => {
-  const navigation = useNavigation<PrimaryScreenProps<"productDetails">>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<PrimaryParamList>>();
   const { colors } = useTheme();
   const styles = makeStyle(colors);
   return (
