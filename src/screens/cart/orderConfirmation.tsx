@@ -12,7 +12,7 @@ const OrderConfirmationScreen: FC<PrimaryScreenProps<"orderConfirmation">> = ({
   navigation,
 }) => {
   const cart = useAppSelector(selectCart);
-  const user = useAppSelector(selectUser);
+  const { user } = useAppSelector(selectUser);
   const { colors } = useTheme();
   const styles = useMemo(() => makeStyle(colors), [colors]);
   const fullAddress = useMemo(() => {
