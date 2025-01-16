@@ -6,19 +6,21 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from "react-native";
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 
 export interface ButtonProps {
-  title: string;
+  title?: string;
+  titleProps?: ReactElement;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
 }
 const Button: FC<ButtonProps> = ({
   title,
+  titleProps,
   onPress,
   style,
   titleStyle,
@@ -32,7 +34,11 @@ const Button: FC<ButtonProps> = ({
       onPress={onPress}
       {...rest}
     >
-      <Text style={[styles.buttonText, titleStyle]}>{title}</Text>
+      {titleProps ? (
+        titleProps
+      ) : (
+        <Text style={[styles.buttonText, titleStyle]}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };

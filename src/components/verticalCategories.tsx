@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { FC } from "react";
+import React from "react";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useAppDispatch, useAppSelector } from "src/store";
 import {
   Category,
@@ -20,10 +21,11 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import Skeleton from "./skeleton";
-import { PrimaryScreenProps } from "src/navigation";
+import { PrimaryParamList } from "src/navigation";
 
 const VerticalCategories = () => {
-  const navigation = useNavigation<PrimaryScreenProps<"shopHome">>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<PrimaryParamList>>();
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
   const styles = makeStyle(colors);

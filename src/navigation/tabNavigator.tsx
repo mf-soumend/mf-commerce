@@ -13,7 +13,6 @@ import Home from "src/screens/home";
 import Profile from "src/screens/profile";
 import Notifications from "src/screens/notifications";
 import Orders from "src/screens/orders";
-import { selectUser, useAppSelector } from "src/store";
 import makeCommanStyles from "styles";
 import {
   Home2,
@@ -43,7 +42,6 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
 }) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
-  const user = useAppSelector(selectUser).user;
   const commonStyles = makeCommanStyles(colors);
   /**
    * Screen options for tab navigator
@@ -98,19 +96,10 @@ export const TabNavigator: FC<PrimaryScreenProps<"shopHome">> = ({
                   tabNav.navigate("profile");
                 }}
               >
-                {user?.image ? (
-                  // TODO: replace "source={require("assets/categorytemp.png")}" with "src={user.image}"
-                  <Image
-                    source={require("assets/user.png")}
-                    style={styles.profilePicture}
-                  />
-                ) : (
-                  <Prf
-                    variant={"Broken"}
-                    size={vs(spacing.md)}
-                    color={colors.black}
-                  />
-                )}
+                <Image
+                  source={require("assets/user.png")}
+                  style={styles.profilePicture}
+                />
               </TouchableOpacity>
             );
           },

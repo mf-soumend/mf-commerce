@@ -6,10 +6,10 @@ import {
 import { NavigationProps } from "./appNavigator";
 import Login from "src/screens/login";
 import { selectIsAuthenticated, useAppSelector } from "src/store";
-import { TabNavigator } from "./tabNavigator";
+import { TabNavigator, TabParamsList } from "./tabNavigator";
 import Cart from "src/screens/cart";
 import ProductList from "src/screens/productList";
-import { useTheme } from "@react-navigation/native";
+import { NavigatorScreenParams, useTheme } from "@react-navigation/native";
 import {
   StatusBar,
   Text,
@@ -24,14 +24,18 @@ import { verticalScale as vs } from "src/utils";
 import { spacing } from "src/theme";
 import ProductDetails from "src/screens/productDetails";
 import { SafeAreaView } from "react-native-safe-area-context";
+import OrderConfirmationScreen from "src/screens/cart/orderConfirmation";
+import OrderSuccess from "src/screens/cart/orderSuccess";
 
 export type PrimaryParamList = {
   login: undefined;
-  shopHome: undefined;
+  shopHome: NavigatorScreenParams<TabParamsList> | undefined;
   cart: undefined;
   productList: undefined;
   search: undefined;
   productDetails: { id: number };
+  orderConfirmation: undefined;
+  orderSuccess: undefined;
 };
 export type PrimaryScreenProps<T extends keyof PrimaryParamList> =
   NativeStackScreenProps<PrimaryParamList, T>;
@@ -109,7 +113,21 @@ export const PrimaryNavigator = (props: NavigationProps) => {
                 ),
               }}
             />
+            <PrimaryStack.Screen
+              name="orderConfirmation"
+              component={OrderConfirmationScreen}
+              options={{
+                headerTitle: () => (
+                  <Text style={commonStyles.primaryHeaderTitle}>Checkout</Text>
+                ),
+              }}
+            />
             <PrimaryStack.Screen name="search" component={Search} />
+            <PrimaryStack.Screen
+              name="orderSuccess"
+              component={OrderSuccess}
+              options={{ headerShown: false }}
+            />
             <PrimaryStack.Screen
               name="productDetails"
               component={ProductDetails}

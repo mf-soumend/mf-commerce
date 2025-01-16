@@ -17,7 +17,7 @@ import ResultNotFound from "src/components/resultNotFound";
 import Button from "src/components/button";
 import CartCard from "src/components/cartCard";
 
-const Cart: FC<PrimaryScreenProps<"cart">> = () => {
+const Cart: FC<PrimaryScreenProps<"cart">> = ({ navigation }) => {
   const cart = useAppSelector(selectCart);
   const { colors } = useTheme();
   const styles = useMemo(() => makeStyle(colors), [colors]);
@@ -81,7 +81,12 @@ const Cart: FC<PrimaryScreenProps<"cart">> = () => {
           <Text style={styles.paragraph}>Total</Text>
           <Text style={styles.paragraphHighLight}>${total.toFixed(2)}</Text>
         </View>
-        <Button title="Checkout" onPress={() => {}} />
+        <Button
+          title="Checkout"
+          onPress={() => {
+            navigation.navigate("orderConfirmation");
+          }}
+        />
       </View>
     </View>
   );
