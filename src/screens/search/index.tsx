@@ -95,7 +95,7 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
       >
         <Pressable style={styles.shortByButton} onPress={handleOpenBottomSheet}>
-          <Text style={styles.btnText}>Short by</Text>
+          <Text style={styles.btnText}>Sort by</Text>
           <ArrowDown2
             size={vs(spacing.md)}
             variant="Broken"
@@ -132,7 +132,7 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
                 Clear
               </Text>
             </Pressable>
-            <Text style={styles.bottomSheetHeaderTitle}>Short by</Text>
+            <Text style={styles.bottomSheetHeaderTitle}>Sort by</Text>
             <Pressable
               style={{
                 width: 70,
