@@ -86,6 +86,7 @@ const Cart: FC<PrimaryScreenProps<"cart">> = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("orderConfirmation");
           }}
+          style={styles.btnStyle}
         />
       </View>
     </View>
@@ -138,4 +139,5 @@ const makeStyle = (colors: Colors) =>
       fontSize: fontSize.body2,
       color: colors.text,
     },
+    btnStyle: { marginTop: vs(spacing.lg) },
   });
