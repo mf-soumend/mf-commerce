@@ -6,6 +6,7 @@ interface SingleCartProp {
   price: number;
   name: string;
   thumbnail: string;
+  minimumOrderQuantity: number;
 }
 
 interface CartProps {
@@ -41,7 +42,7 @@ const cartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter(
-        ({ productId }) => productId === action.payload.productId
+        ({ productId }) => productId !== action.payload.productId
       );
     },
     removeAll: (state) => {

@@ -3,8 +3,9 @@ import React, { FC } from "react";
 import { PrimaryScreenProps } from "src/navigation";
 import { selectSelectedCategoryName, useAppSelector } from "src/store";
 import { useTheme } from "@react-navigation/native";
-import { Colors } from "src/theme";
+import { Colors, spacing } from "src/theme";
 import ProductListings from "src/components/productListings";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProductList: FC<PrimaryScreenProps<"productList">> = () => {
   const selectedCategory = useAppSelector(selectSelectedCategoryName);
@@ -13,9 +14,9 @@ const ProductList: FC<PrimaryScreenProps<"productList">> = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ProductListings showTitle title={selectedCategory} />
-      </View>
+      </SafeAreaView>
     </>
   );
 };

@@ -15,6 +15,7 @@ import {
   Text,
   TouchableOpacity,
   useColorScheme,
+  View,
 } from "react-native";
 import makeCommanStyles from "styles";
 import Search from "src/screens/search";
@@ -22,6 +23,7 @@ import { ArrowLeft2 } from "iconsax-react-native";
 import { verticalScale as vs } from "src/utils";
 import { spacing } from "src/theme";
 import ProductDetails from "src/screens/productDetails";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export type PrimaryParamList = {
   login: undefined;
@@ -40,7 +42,7 @@ export const PrimaryNavigator = (props: NavigationProps) => {
   const scheme = useColorScheme();
   const commonStyles = makeCommanStyles(colors);
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <StatusBar
         backgroundColor={colors.background}
         barStyle={scheme === "dark" ? "light-content" : "dark-content"}
@@ -50,23 +52,43 @@ export const PrimaryNavigator = (props: NavigationProps) => {
         screenOptions={({ navigation }) => ({
           headerShown: true,
           headerStyle: commonStyles.header,
-          title: "",
           headerTitleAlign: "center",
           headerShadowVisible: false,
-          headerLeft: () => {
+          header: ({ options }) => {
+            const renderHeaderTitle = () => {
+              if (typeof options.headerTitle === "function") {
+                // Call the function to render the title
+                return options.headerTitle({
+                  children: "",
+                  tintColor: colors.text,
+                });
+              } else if (typeof options.headerTitle === "string") {
+                // Render the string directly
+                return (
+                  <Text style={commonStyles.primaryHeaderTitle}>
+                    {options.headerTitle}
+                  </Text>
+                );
+              }
+              return null; // Default case, no title
+            };
+
             return (
-              <TouchableOpacity
-                style={commonStyles.leftRightBtnStyle}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              >
-                <ArrowLeft2
-                  size={vs(spacing.md)}
-                  variant="Broken"
-                  color={colors.text}
-                />
-              </TouchableOpacity>
+              <View style={commonStyles.header}>
+                <TouchableOpacity
+                  style={commonStyles.leftRightBtnStyle}
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                >
+                  <ArrowLeft2
+                    size={vs(spacing.md)}
+                    variant="Broken"
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+                {renderHeaderTitle()}
+              </View>
             );
           },
         })}
@@ -102,6 +124,6 @@ export const PrimaryNavigator = (props: NavigationProps) => {
           />
         )}
       </PrimaryStack.Navigator>
-    </>
+    </SafeAreaView>
   );
 };

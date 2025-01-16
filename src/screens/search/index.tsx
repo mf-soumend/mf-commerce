@@ -15,6 +15,7 @@ import { ArrowDown2, CloseCircle, SearchNormal1 } from "iconsax-react-native";
 import { useTheme } from "@react-navigation/native";
 import ProductListings from "src/components/productListings";
 import BottomSheet, { BottomSheetRef } from "src/components/bottomSheet";
+import { InteractionManager } from "react-native";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -57,7 +58,7 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
+      headerTitle: () => (
         <View style={styles.searchWrapper}>
           <Input
             ref={inputRef}
@@ -71,9 +72,6 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
                 variant="Broken"
               />
             )}
-            onPress={() => {
-              inputRef.current?.focus();
-            }}
             onChangeText={(value) => {
               debouncedHandleSearch(value);
             }}
@@ -81,12 +79,12 @@ const Search: FC<PrimaryScreenProps<"search">> = ({ navigation }) => {
         </View>
       ),
     });
-    // Focus the input field programmatically
-    setTimeout(() => {
-      if (inputRef.current?.focus) {
-        inputRef.current.focus();
-      }
-    }, 100); // Slight delay to ensure navigation and rendering is complete
+
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      inputRef.current?.focus();
+    });
+
+    return () => interaction.cancel(); // Cleanup interactions
   }, [navigation, debouncedHandleSearch]);
 
   return (

@@ -53,6 +53,7 @@ const ProductDetails: FC<PrimaryScreenProps<"productDetails">> = ({
         price: product.price,
         name: product.title,
         thumbnail: product.thumbnail,
+        minimumOrderQuantity: product.minimumOrderQuantity,
       })
     );
     Alert.alert(`${product.title} added to cart`);
