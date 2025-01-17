@@ -41,7 +41,7 @@ const Home: FC<TabScreenProps<"home">> = () => {
       fetchCategoryList();
       saveUserDetails();
     }
-  }, [user]);
+  }, []);
   return (
     <View style={styles.container}>
       <Animated.View

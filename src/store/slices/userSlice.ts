@@ -42,7 +42,7 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUserDetails.fulfilled, (state, action) => {
         const { data } = action.payload;
-        state.user = { ...(state.user?.user ?? {}), ...data };
+        state.user = { user: { ...(state.user?.user ?? {}), ...data } };
       })
       .addCase(fetchUserDetails.rejected, (state, action) => {
         state.user = null;
