@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface SingleCartProp {
+export interface SingleCartProp {
   productId: number;
   quantity: number;
   price: number;

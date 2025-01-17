@@ -26,6 +26,7 @@ import ProductDetails from "src/screens/productDetails";
 import { SafeAreaView } from "react-native-safe-area-context";
 import OrderConfirmationScreen from "src/screens/cart/orderConfirmation";
 import OrderSuccess from "src/screens/cart/orderSuccess";
+import OrderDetails from "src/screens/orderDetails";
 
 export type PrimaryParamList = {
   login: undefined;
@@ -36,6 +37,7 @@ export type PrimaryParamList = {
   productDetails: { id: number };
   orderConfirmation: undefined;
   orderSuccess: undefined;
+  orderDetails: { id: number };
 };
 export type PrimaryScreenProps<T extends keyof PrimaryParamList> =
   NativeStackScreenProps<PrimaryParamList, T>;
@@ -112,6 +114,17 @@ export const PrimaryNavigator = (props: NavigationProps) => {
                   <Text style={commonStyles.primaryHeaderTitle}>Cart</Text>
                 ),
               }}
+            />
+            <PrimaryStack.Screen
+              name="orderDetails"
+              component={OrderDetails}
+              options={({ route }) => ({
+                headerTitle: () => (
+                  <Text style={commonStyles.primaryHeaderTitle}>
+                    Order #{route.params.id}
+                  </Text>
+                ),
+              })}
             />
             <PrimaryStack.Screen
               name="orderConfirmation"
