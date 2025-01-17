@@ -2,16 +2,18 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { FC, useMemo } from "react";
 import { PrimaryScreenProps } from "src/navigation";
 import { selectUser, useAppDispatch, useAppSelector } from "src/store";
-import { selectCart } from "src/store/slices/cartSlice";
+import { removeAll, selectCart } from "slices/cartSlice";
 import { useTheme } from "@react-navigation/native";
 import { Colors, fontSize, spacing, typography } from "src/theme";
 import { verticalScale as vs } from "src/utils";
 import Button from "src/components/button";
+import { placeOrder } from "slices/orderSlice";
 
 const OrderConfirmationScreen: FC<PrimaryScreenProps<"orderConfirmation">> = ({
   navigation,
 }) => {
   const cart = useAppSelector(selectCart);
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector(selectUser);
   const { colors } = useTheme();
   const styles = useMemo(() => makeStyle(colors), [colors]);
@@ -19,7 +21,16 @@ const OrderConfirmationScreen: FC<PrimaryScreenProps<"orderConfirmation">> = ({
     const { address, city, state, stateCode, postalCode } = user?.address;
     return `${address}, ${city}, ${state} (${stateCode}) ${postalCode}`;
   }, [user]);
-  const dispatch = useAppDispatch();
+
+  const placeOrderFn = () => {
+    const orderDetails = {
+      cart: cart,
+      address: fullAddress,
+    };
+    dispatch(placeOrder(orderDetails));
+    dispatch(removeAll());
+    navigation.popTo("orderSuccess");
+  };
 
   const total = useMemo(
     () =>
@@ -66,9 +77,7 @@ const OrderConfirmationScreen: FC<PrimaryScreenProps<"orderConfirmation">> = ({
             </View>
           }
           style={styles.btnStyle}
-          onPress={() => {
-            navigation.popTo("orderSuccess");
-          }}
+          onPress={placeOrderFn}
         />
       </View>
     </View>

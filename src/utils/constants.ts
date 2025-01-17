@@ -18,3 +18,12 @@ export const getParam = (
     return { shortBy: "", order: "desc" };
   }
 };
+
+export const ordersCategory = [
+  "All",
+  "Processing",
+  "Shipped",
+  "Delivered",
+  "Returned",
+  "Canceled",
+];
