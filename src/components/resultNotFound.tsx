@@ -28,9 +28,9 @@ const ResultNotFound = ({
     useNavigation<NativeStackNavigationProp<PrimaryParamList>>();
   const goToHome = () => {
     if (navigation.canGoBack()) {
-      navigation.pop();
+      navigation.goBack();
     } else {
-      navigation.navigate("shopHome"); // Fallback navigation
+      navigation.navigate("shopHome");
     }
   };
   return (
